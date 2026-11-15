@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { navLinks, profile } from "@/data/profile";
-import { ThemeToggle } from "./ThemeToggle";
 
 export function Nav() {
   const pathname = usePathname();
@@ -77,7 +76,6 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-line text-muted md:hidden"
