@@ -2,7 +2,7 @@
 # Only the build command and Node version are set here.
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "20"
