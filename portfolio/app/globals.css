@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 250 250 250; /* #FAFAFA */
+  --surface: 255 255 255;
+  --fg: 23 23 23; /* #171717 */
+  --muted: 115 115 115; /* #737373 */
+  --accent: 37 99 235; /* #2563EB */
+  --accent-fg: 37 99 235;
+  --line: 229 231 235; /* #E5E7EB */
+}
+
+.dark {
+  --bg: 18 18 18;
+  --surface: 24 24 24;
+  --fg: 229 229 229;
+  --muted: 163 163 163;
+  --accent: 37 99 235;
+  --accent-fg: 96 165 250; /* same blue, lighter for text contrast on charcoal */
+  --line: 44 44 44;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.2);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent-fg));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* Engineering-diagram grid, faded toward one corner */
+.bg-grid {
+  position: relative;
+  isolation: isolate;
+}
+.bg-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(var(--line) / 0.8) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--line) / 0.8) 1px, transparent 1px);
+  background-size: 40px 40px;
+  -webkit-mask-image: radial-gradient(ellipse at 75% 20%, #000 10%, transparent 70%);
+  mask-image: radial-gradient(ellipse at 75% 20%, #000 10%, transparent 70%);
+}
+.bg-grid-sm::before {
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, transparent 85%);
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 0%, transparent 85%);
+}
+
+/* Directional flow connector: dashes travel from top to bottom */
+.flow-line-v {
+  width: 2px;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(var(--accent)) 0 4px,
+    transparent 4px 8px
+  );
+  background-size: 2px 8px;
+  animation: flow-v 0.9s linear infinite;
+}
+@keyframes flow-v {
+  to {
+    background-position: 0 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .flow-line-v {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
